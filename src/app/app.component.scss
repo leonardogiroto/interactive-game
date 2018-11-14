@@ -1,0 +1,49 @@
+#Game {
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+  height: calc(100vh - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  div.start {
+    text-align: center;
+
+    h1 {
+      font-size: 85px;
+      text-transform: uppercase;
+      color: var(--main-color);
+    }
+  }
+
+  p, textarea {
+    font-size: 30px;
+    color: var(--main-color);
+  }
+  textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    min-width: 280px;
+    border-radius: 4px;
+  }
+  button {
+    font-size: 30px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
+    padding: 10px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.85;
+    }
+    &.send {
+      width: 300px;
+    }
+  }
+}
