@@ -15,6 +15,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public gameStarted: boolean = false;
   public currentContent: Content;
   public inputValue: string;
+  public showBirds: boolean = false;
 
   private _items: Array<Content>;
 
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       src: ['../../../assets/audio/forest.mp3'],
       loop: true
     }).play();
+    setTimeout(() => this.showBirds = true, 8000);
   }
 
   public getContentText(): string {
@@ -85,6 +87,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       src: ['../../../assets/audio' + content.audio_path],
       volume: 0.5,
       onend: () => {
+        this.showBirds = false;
+
         if (content.present_input) {
           content.show_input = true;
         } else if (content.next_content) {

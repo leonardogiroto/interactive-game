@@ -1,10 +1,19 @@
 <div id="Game" >
   <div class="start" *ngIf="!gameStarted" >
     <h1>Awesome Game Title</h1>
+    <h2>
+      Turn on the volume.<br>
+      Best experienced with headphones.
+    </h2>
     <button (click)="startGame()" [disabled]="!canStartGame" >
       Start
     </button>
   </div>
+
+  <ng-container *ngIf="gameStarted" >
+    <app-sun></app-sun>
+    <app-birds *ngIf="showBirds" ></app-birds>
+  </ng-container>
 
   <p
     [innerHtml]="getContentText()"
@@ -21,4 +30,3 @@
     </button>
   </ng-container>
 </div>
-

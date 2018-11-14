@@ -7,10 +7,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
+import { SunComponent } from './components/sun.component';
+import { BirdsComponent } from './components/birds.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SunComponent,
+    BirdsComponent
   ],
   imports: [
     BrowserModule,
