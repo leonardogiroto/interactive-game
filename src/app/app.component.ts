@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.gameStarted = true;
     this.windAudio.pause();
 
-    this.currentContent = this._items['start_04'];
+    this.currentContent = this._items['start_01'];
     this._goToNextSection( this.currentContent );
     new Howl({
       src: ['../../../assets/audio/forest.mp3'],
