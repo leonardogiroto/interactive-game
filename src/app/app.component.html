@@ -29,4 +29,12 @@
       Send
     </button>
   </ng-container>
+
+  <ng-container *ngIf="currentContent?.present_select && !audioPlaying" >
+    <div class="option"
+      *ngFor="let option of getOptions()"
+      (click)="handleSelect(option)" >
+      {{ currentContent.options[option] }}
+    </div>
+  </ng-container>
 </div>

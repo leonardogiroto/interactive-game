@@ -16,6 +16,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public currentContent: Content;
   public inputValue: string;
   public showBirds: boolean = false;
+  public audioPlaying: boolean = false;
 
   private _items: Array<Content>;
 
@@ -40,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.gameStarted = true;
     this.windAudio.pause();
 
-    this.currentContent = this._items['start_01'];
+    this.currentContent = this._items['start_04'];
     this._goToNextSection( this.currentContent );
     new Howl({
       src: ['../../../assets/audio/forest.mp3'],
@@ -62,6 +63,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     return this.currentContent.text;
   }
 
+  public getOptions(): Array<string> {
+    if (this.currentContent.options) {
+      return Object.keys(this.currentContent.options);
+    }
+    return [];
+  }
+
   public handleInput(): void {
     this.currentContent.show_input = false;
     localStorage.setItem(
@@ -69,6 +77,12 @@ export class AppComponent implements OnInit, AfterViewInit {
       this._capitalize( this.inputValue )
     );
     this.currentContent = this._items[ this.currentContent.next_content ];
+    this._goToNextSection( this.currentContent );
+  }
+
+  public handleSelect(selection: string): void {
+    this.currentContent.present_select = false;
+    this.currentContent = this._items[ selection ];
     this._goToNextSection( this.currentContent );
   }
 
@@ -83,10 +97,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private _goToNextSection(content: Content): void {
+    this.audioPlaying = true;
     new Howl({
       src: ['../../../assets/audio' + content.audio_path],
       volume: 0.5,
       onend: () => {
+        this.audioPlaying = false;
         this.showBirds = false;
 
         if (content.present_input) {

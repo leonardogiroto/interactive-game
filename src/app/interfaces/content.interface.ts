@@ -10,5 +10,8 @@ export interface Content {
   show_input?: boolean;
   storage_tag?: string;
 
+  present_select?: boolean;
+  options?: any;
+
   has_tags?: boolean;
 }
