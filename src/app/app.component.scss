@@ -26,6 +26,42 @@
     }
   }
 
+  div.username {
+    position: absolute;
+    top: 0;
+    right: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 240px;
+
+    p {
+      font-size: 26px;
+
+      &.save-hint {
+        position: absolute;
+        top: 50px;
+        right: 65px;
+        font-size: 20px;
+      }
+    }
+    img {
+      width: 30px;
+      margin-left: 15px;
+      cursor: pointer;
+
+      &.arrow {
+        width: 100px;
+        position: absolute;
+        top: 0;
+        right: -15px;
+      }
+      &.mg-top {
+        margin-top: 22px;
+      }
+    }
+  }
+
   p, textarea {
     font-size: 30px;
     color: var(--main-color);

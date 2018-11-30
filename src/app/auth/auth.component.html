@@ -1,0 +1,64 @@
+<div id="AuthModal" >
+  <div class="content" [ngSwitch]="selected" >
+    <div class="login" *ngSwitchDefault >
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email"
+            formControlName="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password"
+            formControlName="password"
+            required
+          />
+        </div>
+        <button type="button"
+          [disabled]="!loginForm.valid"
+          (click)="login()" >
+          Login
+        </button>
+      </form>
+      <p class="change-tab" (click)="selected = 'Register'" >
+        Don't have an account yet?
+      </p>
+    </div>
+
+    <div class="register" *ngSwitchCase="'Register'" >
+      <form [formGroup]="registerForm">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text"
+            formControlName="name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email"
+            formControlName="email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password"
+            formControlName="password"
+            required
+          />
+        </div>
+        <button type="button"
+          [disabled]="!registerForm.valid"
+          (click)="register()" >
+          Register
+        </button>
+      </form>
+      <p class="change-tab" (click)="selected = 'Login'" >
+        Already have an account?
+      </p>
+    </div>
+  </div>
+</div>

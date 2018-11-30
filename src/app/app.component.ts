@@ -17,6 +17,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   public inputValue: string;
   public showBirds: boolean = false;
   public audioPlaying: boolean = false;
+  public user: firebase.User;
+  public notification: string;
+  public showUserinfo: boolean = false;
 
   private _items: Array<Content>;
 
@@ -84,6 +87,19 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.currentContent.present_select = false;
     this.currentContent = this._items[ selection ];
     this._goToNextSection( this.currentContent );
+  }
+
+  public setUser(user: firebase.User): void {
+    this.user = user;
+    this.showUserinfo = true;
+
+    setTimeout(() => {
+      this.showUserinfo = false;
+    }, 3000);
+  }
+
+  public saveGame(): void {
+
   }
 
   private async _loadIntroduction(): Promise<void> {

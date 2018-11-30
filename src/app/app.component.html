@@ -10,6 +10,29 @@
     </button>
   </div>
 
+  <div class="username"
+    *ngIf="user"
+    (mouseenter)="showUserinfo = true"
+    (mouseleave)="showUserinfo = false"
+  >
+    <p *ngIf="showUserinfo" >
+      Hello, {{ user.displayName }}!
+    </p>
+    <img class="save"
+      [ngClass]="{ 'mg-top': !showUserinfo }"
+      (click)="saveGame()"
+      src="./assets/img/floppy.svg"
+    />
+    <ng-container *ngIf="showUserinfo" >
+      <p class="save-hint" >
+        click here to save progress
+      </p>
+      <img class="arrow"
+        src="./assets/img/arrow.svg"
+      />
+    </ng-container>
+  </div>
+
   <ng-container *ngIf="gameStarted" >
     <app-sun></app-sun>
     <app-birds *ngIf="showBirds" ></app-birds>
@@ -38,3 +61,14 @@
     </div>
   </ng-container>
 </div>
+
+<app-auth
+  *ngIf="!user"
+  (setUser)="setUser($event)"
+></app-auth>
+
+<app-notification
+  *ngIf="notification"
+  (click)="notification = null"
+  [text]="notification"
+></app-notification>

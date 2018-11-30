@@ -1,0 +1,12 @@
+p.notification {
+  position: absolute;
+  top: 0;
+  width: calc(40% - 20px);
+  text-align: center;
+  color: white;
+  background: black;
+  margin: 0px 30%;
+  padding: 10px;
+  font-size: 28px;
+  cursor: pointer;
+}
