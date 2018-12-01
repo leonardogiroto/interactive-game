@@ -1,46 +1,25 @@
 <div id="Game" >
-  <div class="start" *ngIf="!gameStarted" >
-    <h1>Awesome Game Title</h1>
-    <h2>
-      Turn on the volume.<br>
-      Best experienced with headphones & fullscreen.
-    </h2>
-    <button (click)="startGame()" [disabled]="!canStartGame" >
-      Start
-    </button>
-  </div>
+  <app-start-game
+    *ngIf="!gameStarted"
+    [canStartGame]="canStartGame"
+    (startGame)="startGame()"
+  ></app-start-game>
 
-  <div class="username"
+  <app-save-game
     *ngIf="user"
-    (mouseenter)="showUserinfo = true"
-    (mouseleave)="showUserinfo = false"
-  >
-    <p *ngIf="showUserinfo" >
-      Hello, {{ user.displayName }}!
-    </p>
-    <img class="save"
-      [ngClass]="{ 'mg-top': !showUserinfo }"
-      (click)="saveGame()"
-      src="./assets/img/floppy.svg"
-    />
-    <ng-container *ngIf="showUserinfo" >
-      <p class="save-hint" >
-        click here to save progress
-      </p>
-      <img class="arrow"
-        src="./assets/img/arrow.svg"
-      />
-    </ng-container>
-  </div>
+    [showUserinfo]="showUserinfo"
+    [user]="user"
+    (saveGame)="saveGame()"
+  ></app-save-game>
 
   <ng-container *ngIf="gameStarted" >
     <app-sun></app-sun>
     <app-birds *ngIf="showBirds" ></app-birds>
   </ng-container>
 
-  <p
-    [innerHtml]="getContentText()"
-  ></p>
+  <app-game-text
+    [currentContent]="currentContent"
+  ></app-game-text>
 
   <ng-container *ngIf="currentContent?.show_input" >
     <textarea
@@ -54,11 +33,10 @@
   </ng-container>
 
   <ng-container *ngIf="currentContent?.present_select && !audioPlaying" >
-    <div class="option"
-      *ngFor="let option of getOptions()"
-      (click)="handleSelect(option)" >
-      {{ currentContent.options[option] }}
-    </div>
+    <app-game-options
+      [currentContent]="currentContent"
+      (handleSelect)="handleSelect($event)"
+    ></app-game-options>
   </ng-container>
 </div>
 

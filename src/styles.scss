@@ -12,3 +12,25 @@ h1, h2, p, button,
 input, textarea, label {
   font-family: 'Smythe', cursive;
 }
+p, textarea {
+  font-size: 30px;
+  color: var(--main-color);
+}
+button {
+  font-size: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  padding: 10px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.85;
+  }
+  &.send {
+    width: 300px;
+  }
+}

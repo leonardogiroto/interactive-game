@@ -9,15 +9,24 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AppComponent } from './app.component';
 import { SunComponent } from './components/sun.component';
 import { BirdsComponent } from './components/birds.component';
-import { AuthComponent } from './auth/auth.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { NotificationComponent } from './notification/notification.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { StartGameComponent } from './components/start-game/start-game.component';
+import { SaveGameComponent } from './components/save-game/save-game.component';
+import { UtilService } from './services/util.service';
+import { GameOptionsComponent } from './components/_game-options/game-options.component';
+import { GameTextComponent } from './components/_game-text/game-text.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    StartGameComponent,
+    SaveGameComponent,
     AuthComponent,
     NotificationComponent,
+    GameTextComponent,
+    GameOptionsComponent,
     SunComponent,
     BirdsComponent
   ],
@@ -29,7 +38,9 @@ import { NotificationComponent } from './notification/notification.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [
+    UtilService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

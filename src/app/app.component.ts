@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Howl } from 'howler';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Content } from './interfaces/content.interface';
+import { UtilService } from './services/util.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   private _currentKey: string = 'start_01';
 
   constructor(
-    private _db: AngularFireDatabase
+    private _db: AngularFireDatabase,
+    private _utilService: UtilService
   ) { }
 
   ngOnInit() {
@@ -55,31 +57,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     setTimeout(() => this.showBirds = true, 8000);
   }
 
-  public getContentText(): string {
-    if (!this.currentContent) { return ''; }
-
-    if (this.currentContent.has_tags) {
-      this.currentContent.text =
-        this.currentContent.text.replace(
-          /([\[(])(.+?)([\])])/g, this._replaceTag
-        );
-    }
-
-    return this.currentContent.text;
-  }
-
-  public getOptions(): Array<string> {
-    if (this.currentContent.options) {
-      return Object.keys(this.currentContent.options);
-    }
-    return [];
-  }
-
   public handleInput(): void {
     this.currentContent.show_input = false;
     localStorage.setItem(
       this.currentContent.storage_tag,
-      this._capitalize( this.inputValue )
+      this._utilService.capitalize( this.inputValue )
     );
     this.currentContent = this._items[ this.currentContent.next_content ];
     this._goToNextSection( this.currentContent );
@@ -166,14 +148,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
       }
     }).play();
-  }
-
-  private _replaceTag(match, bracket1, tag: string): string {
-    return localStorage.getItem(tag);
-  }
-
-  private _capitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   private _setNotification(text: string) {
