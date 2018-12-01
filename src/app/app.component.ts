@@ -90,6 +90,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public setUser(user: firebase.User): void {
+    this._loadSave( user.uid );
     this.user = user;
     this.showUserinfo = true;
 
@@ -106,7 +107,19 @@ export class AppComponent implements OnInit, AfterViewInit {
     try {
       const response = await this._db.list('/introduction').query.once('value');
       this._items = response.val();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private async _loadSave(userId: string): Promise<void> {
+    try {
+      const response = await this._db.list(
+        '/saves/' + userId
+      ).query.once('value');
       this.canStartGame = true;
+      console.log(response.val());
+
     } catch (error) {
       console.error(error);
     }
