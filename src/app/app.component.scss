@@ -59,6 +59,10 @@
       &.mg-top {
         margin-top: 22px;
       }
+      &.save {
+        position: relative;
+        z-index: 2;
+      }
     }
   }
 

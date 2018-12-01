@@ -22,6 +22,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   public showUserinfo: boolean = false;
 
   private _items: Array<Content>;
+  private _currentChapter: string = 'introduction';
+  private _currentKey: string = 'start_01';
 
   constructor(
     private _db: AngularFireDatabase
@@ -44,7 +46,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.gameStarted = true;
     this.windAudio.pause();
 
-    this.currentContent = this._items['start_01'];
+    this.currentContent = this._items[ this._currentKey ];
     this._goToNextSection( this.currentContent );
     new Howl({
       src: ['../../../assets/audio/forest.mp3'],
@@ -99,8 +101,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     }, 3000);
   }
 
-  public saveGame(): void {
+  public async saveGame(): Promise<void> {
+    try {
+      if (!this.gameStarted || this._currentKey === 'start_01') {
+        this._setNotification('You need to have progress before saving!');
+        return;
+      }
 
+      const updateObj = { };
+      updateObj[ this.user.uid ] = this._currentChapter + '.' + this._currentKey;
+      await this._db.object('/saves/').update(updateObj);
+      this._setNotification('Game saved successfully!');
+
+    } catch (error) {
+      console.error(error);
+      this._setNotification('There was an error saving... Please try again!');
+    }
   }
 
   private async _loadIntroduction(): Promise<void> {
@@ -117,8 +133,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       const response = await this._db.list(
         '/saves/' + userId
       ).query.once('value');
+
+      const savedKey = response.val();
+      if (savedKey) {
+        const key = savedKey.split('.')[1];
+        this._currentKey = key;
+      }
       this.canStartGame = true;
-      console.log(response.val());
 
     } catch (error) {
       console.error(error);
@@ -138,6 +159,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           content.show_input = true;
         } else if (content.next_content) {
           setTimeout(() => {
+            this._currentKey = content.next_content;
             this.currentContent = this._items[ content.next_content ];
             this._goToNextSection( this.currentContent );
           }, content.next_delay ? content.next_delay : 0);
@@ -152,6 +174,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private _capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  private _setNotification(text: string) {
+    this.notification = text;
+    setTimeout(() => this.notification = null, 3500);
   }
 
 }
