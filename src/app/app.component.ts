@@ -70,6 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public handleSelect(selection: string): void {
     this.currentContent.present_select = false;
     this.currentContent = this._items[ selection ];
+    this._currentKey = selection;
     this._goToNextSection( this.currentContent );
   }
 
@@ -119,7 +120,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       const savedKey = response.val();
       if (savedKey) {
         const key = savedKey.split('.')[1];
-        this._currentKey = key;
+
+        if (key && key.trim() !== '' && key !== 'undefined') {
+          this._currentKey = key;
+        }
       }
       this.canStartGame = true;
 
