@@ -2,7 +2,9 @@
   <app-start-game
     *ngIf="!gameStarted"
     [canStartGame]="canStartGame"
+    [hasSave]="hasSave"
     (startGame)="startGame()"
+    (resetSave)="resetSave()"
   ></app-start-game>
 
   <app-save-game

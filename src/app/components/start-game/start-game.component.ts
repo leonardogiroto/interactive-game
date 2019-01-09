@@ -12,7 +12,13 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
       <button
         (click)="startGame.emit()"
         [disabled]="!canStartGame" >
-        Start
+        {{ hasSave ? 'Continue' : 'Start' }}
+      </button><br><br>
+      <button
+        *ngIf="hasSave"
+        (click)="confirmReset()"
+        [disabled]="!canStartGame" >
+        Start Over
       </button>
     </div>`,
   styleUrls: ['./start-game.component.scss']
@@ -20,6 +26,15 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 export class StartGameComponent {
 
   @Input() readonly canStartGame: boolean = false;
+  @Input() readonly hasSave: boolean = false;
   @Output() startGame = new EventEmitter();
+  @Output() resetSave = new EventEmitter();
+
+  public confirmReset(): void {
+    const resolution = confirm('Are you sure you want to reset the save and start over?');
+    if (resolution) {
+      this.resetSave.emit();
+    }
+  }
 
 }

@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public user: firebase.User;
   public notification: string;
   public showUserinfo: boolean = false;
+  public hasSave: boolean = false;
 
   private _items: Array<Content>;
   private _currentChapter: string = 'introduction';
@@ -55,6 +56,17 @@ export class AppComponent implements OnInit, AfterViewInit {
       loop: true
     }).play();
     setTimeout(() => this.showBirds = true, 8000);
+  }
+
+  public async resetSave(): Promise<void> {
+    try {
+      await this._db.object('/saves/' + this.user.uid).remove();
+      this._setNotification('Game save was reseted successfully!');
+
+    } catch (error) {
+      console.error(error);
+      this._setNotification('There was an error... Please try again!');
+    }
   }
 
   public handleInput(): void {
@@ -126,6 +138,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
       }
       this.canStartGame = true;
+      this.hasSave = this._currentKey !== 'start_01';
 
     } catch (error) {
       console.error(error);
