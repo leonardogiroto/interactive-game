@@ -62,6 +62,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     try {
       await this._db.object('/saves/' + this.user.uid).remove();
       this._setNotification('Game save was reseted successfully!');
+      this._currentKey = 'start_01';
+      this.startGame();
 
     } catch (error) {
       console.error(error);
